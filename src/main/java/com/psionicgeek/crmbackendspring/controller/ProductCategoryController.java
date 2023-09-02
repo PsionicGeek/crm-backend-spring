@@ -31,9 +31,10 @@ public class ProductCategoryController {
         // TODO: 27-08-2023 Add auth check when security is done
         List<ProductCategoryDTO> somebean = productCategoryService.listProductCategory();
         MappingJacksonValue value = new MappingJacksonValue(somebean);
-        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.serializeAllExcept("productCategories");
-        FilterProvider provider =new SimpleFilterProvider().addFilter("productCategoryFilter",filter);
-        value.setFilters(provider);
+        //SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.serializeAllExcept("productCategories");
+       // FilterProvider provider =new SimpleFilterProvider().addFilter("productCategoryFilter",filter);
+        //value.setFilters(provider);
+        value.setFilters(myFilters.createCustomFilterProvider("productCategoryFilter", "productCategories"));
         return value ;
 
     }
@@ -41,9 +42,10 @@ public class ProductCategoryController {
     public MappingJacksonValue getCategoryById(@PathVariable Integer id){
         ProductCategoryDTO somebean = productCategoryService.findCategoryById(id);
         MappingJacksonValue value = new MappingJacksonValue(somebean);
-        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.serializeAllExcept("productCategories");
-        FilterProvider provider =new SimpleFilterProvider().addFilter("productCategoryFilter",filter);
-        value.setFilters(provider);
+       // SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.serializeAllExcept("productCategories");
+       // FilterProvider provider =new SimpleFilterProvider().addFilter("productCategoryFilter",filter);
+       // value.setFilters(provider);
+        value.setFilters(myFilters.createCustomFilterProvider("productCategoryFilter", "productCategories"));
         return value;
 
     }
