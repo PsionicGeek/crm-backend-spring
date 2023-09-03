@@ -1,6 +1,9 @@
 package com.psionicgeek.crmbackendspring.controller;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.ser.FilterProvider;
 import com.fasterxml.jackson.databind.ser.impl.SimpleBeanPropertyFilter;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
@@ -26,14 +29,14 @@ public class ProductCategoryController {
     private final ProductCategoryService productCategoryService;
 
 
-    @GetMapping("/category")
-    public MappingJacksonValue listProductCategory(){
+    @GetMapping("/categories")
+    public MappingJacksonValue listProductCategory() throws JsonProcessingException {
         // TODO: 27-08-2023 Add auth check when security is done
         List<ProductCategoryDTO> somebean = productCategoryService.listProductCategory();
+//        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.serializeAllExcept("productCategories");
+//        FilterProvider provider =new SimpleFilterProvider().addFilter("productCategoryFilter",filter);
         MappingJacksonValue value = new MappingJacksonValue(somebean);
-        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.serializeAllExcept("productCategories");
-        FilterProvider provider =new SimpleFilterProvider().addFilter("productCategoryFilter",filter);
-        value.setFilters(provider);
+        value.setFilters(myFilters.createCustomFilterProvider("productCategoryFilter","productCategories"));
         return value ;
 
     }
@@ -41,9 +44,9 @@ public class ProductCategoryController {
     public MappingJacksonValue getCategoryById(@PathVariable Integer id){
         ProductCategoryDTO somebean = productCategoryService.findCategoryById(id);
         MappingJacksonValue value = new MappingJacksonValue(somebean);
-        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.serializeAllExcept("productCategories");
-        FilterProvider provider =new SimpleFilterProvider().addFilter("productCategoryFilter",filter);
-        value.setFilters(provider);
+//        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.serializeAllExcept("productCategories");
+//        FilterProvider provider =new SimpleFilterProvider().addFilter("productCategoryFilter",filter);
+        value.setFilters(myFilters.createCustomFilterProvider("productCategoryFilter","productCategories"));
         return value;
 
     }

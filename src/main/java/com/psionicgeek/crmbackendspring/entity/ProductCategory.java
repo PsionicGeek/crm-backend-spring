@@ -1,6 +1,7 @@
 package com.psionicgeek.crmbackendspring.entity;
 
 import com.fasterxml.jackson.annotation.JsonFilter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -9,6 +10,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import java.time.LocalDateTime;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity(name = "category")
@@ -46,7 +48,7 @@ public class ProductCategory  {
 
 
     public void addBrand(ProductBrand brand){
-        System.out.println("Called for brand: " + brand.getName() + "and for category : " + this.getName() );
+
         this.brands.add(brand);
         brand.getProductCategories().add(this);
     }
@@ -56,6 +58,11 @@ public class ProductCategory  {
         this.brands.remove(brand);
         brand.getProductCategories().remove(this);
     }
+
+
+    @JsonIgnore
+    @OneToMany(mappedBy = "category",fetch = FetchType.EAGER)
+    private Set<Product> products;
 
 
     //Mapping

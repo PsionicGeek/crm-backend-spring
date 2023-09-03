@@ -1,6 +1,7 @@
 package com.psionicgeek.crmbackendspring.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.psionicgeek.crmbackendspring.entity.Product;
 import com.psionicgeek.crmbackendspring.entity.ProductBrand;
 import lombok.Builder;
 import lombok.Data;
@@ -18,5 +19,6 @@ public class ProductCategoryDTO {
     LocalDateTime createdDate;
     LocalDateTime updatedDate;
     Set<ProductBrand> brands;
+    Set<Product> products;
 
 }
