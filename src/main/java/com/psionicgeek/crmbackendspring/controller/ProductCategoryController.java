@@ -33,8 +33,6 @@ public class ProductCategoryController {
     public MappingJacksonValue listProductCategory() throws JsonProcessingException {
         // TODO: 27-08-2023 Add auth check when security is done
         List<ProductCategoryDTO> somebean = productCategoryService.listProductCategory();
-//        SimpleBeanPropertyFilter filter= SimpleBeanPropertyFilter.serializeAllExcept("productCategories");
-//        FilterProvider provider =new SimpleFilterProvider().addFilter("productCategoryFilter",filter);
         MappingJacksonValue value = new MappingJacksonValue(somebean);
         value.setFilters(myFilters.createCustomFilterProvider("productCategoryFilter","productCategories"));
         return value ;
